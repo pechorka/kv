@@ -42,7 +42,7 @@ func (kvt *KVTests) List(t *testing.T) {
 			req := httptest.NewRequest(http.MethodPost, "/api/v1/kv", strings.NewReader(body))
 			resp := httptest.NewRecorder()
 			kvt.api.ServeHTTP(resp, req)
-			require.Equal(t, http.StatusCreated, resp.Code)
+			require.Equal(t, http.StatusNoContent, resp.Code)
 		}
 
 		// string отдельно добавляем, он не вписывается в шаблон
@@ -51,7 +51,7 @@ func (kvt *KVTests) List(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/api/v1/kv", strings.NewReader(body))
 		resp := httptest.NewRecorder()
 		kvt.api.ServeHTTP(resp, req)
-		require.Equal(t, http.StatusCreated, resp.Code)
+		require.Equal(t, http.StatusNoContent, resp.Code)
 	}
 
 	// проверяем что все правильно сохранилось
