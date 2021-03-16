@@ -1,0 +1,17 @@
+# Build the Go Binary.
+FROM golang:1.16 as build_kv-api
+ENV CGO_ENABLED 0
+ARG VCS_REF
+
+# Copy the source code into the container.
+COPY . /service
+
+WORKDIR /service/app/kv-api
+RUN go build
+
+
+# Run the Go Binary in Alpine.
+FROM alpine:3.13
+COPY --from=build_kv-api /service/app/kv-api/kv-api /service/kv-api
+WORKDIR /service
+CMD ["./kv-api"]
